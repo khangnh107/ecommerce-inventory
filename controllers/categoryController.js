@@ -10,5 +10,8 @@ exports.categoryList = async (req, res, next) => {
     await client.connect();
     const data = await client.query("SELECT * FROM category")
     await client.end();
-    res.render("category_list", {categoryList: data.rows});
+    res.render("category_list", {
+        title: "List of All Categories",
+        categoryList: data.rows
+    });
 };

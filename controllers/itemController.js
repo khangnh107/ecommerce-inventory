@@ -11,5 +11,8 @@ exports.itemList = async (req, res, next) => {
   const data = await client.query("SELECT * FROM item")
   await client.end();
   console.log(data.rows);
-  res.render("item_list", {itemList: data.rows});
+  res.render("item_list", {
+    title: "List of All Items",
+    itemList: data.rows,
+  });
 }
