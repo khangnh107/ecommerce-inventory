@@ -5,4 +5,5 @@ block content
 
   ul
     for item in itemList
-      li= item.name
+      li
+        a(href=item.url)= item.name
