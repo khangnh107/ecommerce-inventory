@@ -1,3 +1,5 @@
+const asyncHandler = require('express-async-handler');
+
 const { Client } = require('pg');
 const client = new Client({
     host: 'localhost',
@@ -6,7 +8,7 @@ const client = new Client({
     user: 'nhk',
 });
 
-exports.categoryList = async (req, res, next) => {
+exports.categoryList = asyncHandler(async (req, res, next) => {
     await client.connect();
     const data = await client.query("SELECT * FROM category")
     await client.end();
@@ -14,4 +16,4 @@ exports.categoryList = async (req, res, next) => {
         title: "List of All Categories",
         categoryList: data.rows
     });
-};
+});
