@@ -7,6 +7,6 @@ const categoryController = require("../controllers/categoryController");
 
 // Category routes
 // List all categories in database
-router.get("/category", categoryController.categoryList);
+router.get("/categories", categoryController.categoryList);
 
 module.exports = router;
