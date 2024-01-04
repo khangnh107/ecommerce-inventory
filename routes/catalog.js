@@ -15,5 +15,7 @@ router.get("/category/:id", categoryController.categoryDetail);
 // Item Routes
 // List of all items
 router.get("/items", itemController.itemList);
+// Detail page of an item
+router.get("/item/:id", itemController.itemDetail);
 
 module.exports = router;

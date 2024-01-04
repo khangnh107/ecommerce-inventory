@@ -18,3 +18,21 @@ exports.itemList = asyncHandler(async (req, res, next) => {
     itemList: itemList,
   });
 });
+
+exports.itemDetail = asyncHandler(async (req, res, next) => {
+  const client = new Client({
+    host: 'localhost',
+    port: 5432,
+    database: 'ecommerce_inventory',
+    user: 'nhk',
+  });
+
+  await client.connect();
+  const item = (await client.query("SELECT * FROM item WHERE id = $1::bigint", [req.params.id])).rows[0];
+  await client.end();
+
+  console.log(item);
+  res.render("item_detail", {
+    item: item,
+  });
+});
