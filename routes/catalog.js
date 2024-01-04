@@ -7,11 +7,13 @@ const itemController = require("../controllers/itemController")
 // const itemController = require("../controllers/itemController");
 
 // Category Routes
-// List all categories in database
+// List of all categories
 router.get("/categories", categoryController.categoryList);
+// Detail page of a category
+router.get("/category/:id", categoryController.categoryDetail);
 
 // Item Routes
-// List all items in database
+// List of all items
 router.get("/items", itemController.itemList);
 
 module.exports = router;
