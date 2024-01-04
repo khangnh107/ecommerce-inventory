@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    for category in categoryList
+      li= category.name
