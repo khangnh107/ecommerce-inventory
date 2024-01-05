@@ -39,11 +39,11 @@ exports.categoryDetail = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.getCategoryAddForm = asyncHandler(async (req, res, next) => {
+exports.getCategoryForm = asyncHandler(async (req, res, next) => {
     res.render("category_form", {title: "Create Category"});
 });
 
-exports.postCategoryAddForm = asyncHandler(async (req, res, next) => {
+exports.postCategoryAdd = asyncHandler(async (req, res, next) => {
     const client = new Client({
         host: 'localhost',
         port: 5432,
