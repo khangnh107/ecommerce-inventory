@@ -44,3 +44,19 @@ exports.categoryDetail = asyncHandler(async (req, res, next) => {
 exports.getCategoryAddForm = asyncHandler(async (req, res, next) => {
     res.render("category_add_form", {title: "Create Category"});
 });
+
+exports.postCategoryAddForm = asyncHandler(async (req, res, next) => {
+    const client = new Client({
+        host: 'localhost',
+        port: 5432,
+        database: 'ecommerce_inventory',
+        user: 'nhk',
+    });
+
+    console.log("shit");
+    await client.connect();
+    const categoryUrl = (await client.query("INSERT INTO category (name, description) VALUES ($1::text, $2::text) RETURNING url", [req.body.categoryName, req.body.categoryDescription])).rows[0].url;
+    await client.end();
+
+    res.redirect(categoryUrl);
+});
