@@ -6,4 +6,5 @@ block content
   
   ul
     for item in itemsInCategory
-      li= item.name
+      li
+        a(href=item.url)= item.name
