@@ -13,8 +13,6 @@ exports.categoryList = asyncHandler(async (req, res, next) => {
     const category_list = (await client.query("SELECT * FROM category")).rows;
     await client.end();
 
-    console.log(category_list);
-
     res.render("category_list", {
         title: "List of All Categories",
         categoryList: category_list
@@ -42,7 +40,7 @@ exports.categoryDetail = asyncHandler(async (req, res, next) => {
 });
 
 exports.getCategoryAddForm = asyncHandler(async (req, res, next) => {
-    res.render("category_add_form", {title: "Create Category"});
+    res.render("category_form", {title: "Create Category"});
 });
 
 exports.postCategoryAddForm = asyncHandler(async (req, res, next) => {
@@ -53,7 +51,6 @@ exports.postCategoryAddForm = asyncHandler(async (req, res, next) => {
         user: 'nhk',
     });
 
-    console.log("shit");
     await client.connect();
     const categoryUrl = (await client.query("INSERT INTO category (name, description) VALUES ($1::text, $2::text) RETURNING url", [req.body.categoryName, req.body.categoryDescription])).rows[0].url;
     await client.end();

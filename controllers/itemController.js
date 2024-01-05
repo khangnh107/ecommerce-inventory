@@ -31,7 +31,6 @@ exports.itemDetail = asyncHandler(async (req, res, next) => {
   const item = (await client.query("SELECT * FROM item WHERE id = $1::bigint", [req.params.id])).rows[0];
   await client.end();
 
-  console.log(item);
   res.render("item_detail", {
     item: item,
   });
