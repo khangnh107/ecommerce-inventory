@@ -10,12 +10,12 @@ exports.categoryList = asyncHandler(async (req, res, next) => {
     });
 
     await client.connect();
-    const category_list = (await client.query("SELECT * FROM category")).rows;
+    const categoryList = (await client.query("SELECT * FROM category")).rows;
     await client.end();
 
     res.render("category_list", {
         title: "List of All Categories",
-        categoryList: category_list
+        categoryList: categoryList
     });
 });
 

@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  form(action="/catalog/item/create", method="POST")
+    div.mb-3
+      label.form-label(for="item-name") Item Name:
+      input.form-control(type="text", id="item-name", name="itemName")
+    div.mb-3
+      label.form-label(for="item-description") Category Description:
+      textarea.form-control(type="text", id="item-description", name="itemDescription", rows=3)
+    div.mb-3
+      label.form-label(for="item-category") Category of Item:
+      select.form-select(id="item-category", name="itemCategory" aria-label="Which Category does Item belong to?")
+        for category in categoryList
+          option(value=category.name)= category.name
+    div.mb-3
+      label.form-label(for="item-price") Price:
+      input.form-control(type="number", id="item-price", name="itemPrice", min=0)
+    div.mb-3
+      label.form-label(for="item-quantitiy") Quantity in Stock:
+      input.form-control(type="number", id="item-quantitiy", name="itemQuantityInStock", min=0)
+    div
+      input.btn.btn-success(type="submit")

@@ -35,3 +35,21 @@ exports.itemDetail = asyncHandler(async (req, res, next) => {
     item: item,
   });
 });
+
+exports.getItemForm = asyncHandler(async (req, res, next) => {
+  const client = new Client({
+    host: 'localhost',
+    port: 5432,
+    database: 'ecommerce_inventory',
+    user: 'nhk',
+  });
+
+  await client.connect();
+  const categoryList = (await client.query("SELECT * FROM category")).rows;
+  await client.end();
+  
+  res.render("item_form", {
+    title: "Create Item",
+    categoryList: categoryList,
+  });
+});
