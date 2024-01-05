@@ -13,7 +13,7 @@ block content
       label.form-label(for="item-category") Category of Item:
       select.form-select(id="item-category", name="itemCategory" aria-label="Which Category does Item belong to?")
         for category in categoryList
-          option(value=category.name)= category.name
+          option(value=category.id)= category.name
     div.mb-3
       label.form-label(for="item-price") Price:
       input.form-control(type="number", id="item-price", name="itemPrice", min=0)

@@ -21,6 +21,8 @@ router.get("/category/:id", categoryController.categoryDetail);
 router.get("/items", itemController.itemList);
 // Page to create new item
 router.get("/item/create", itemController.getItemForm);
+// POST route to create new item
+router.post("/item/create", itemController.postItemAdd);
 // Detail page of an item
 router.get("/item/:id", itemController.itemDetail);
 

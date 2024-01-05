@@ -53,3 +53,19 @@ exports.getItemForm = asyncHandler(async (req, res, next) => {
     categoryList: categoryList,
   });
 });
+
+exports.postItemAdd = asyncHandler(async (req, res, next) => {
+  const client = new Client({
+    host: 'localhost',
+    port: 5432,
+    database: 'ecommerce_inventory',
+    user: 'nhk',
+  });
+
+  await client.connect();
+  const {itemName, itemDescription, itemCategory, itemPrice, itemQuantityInStock} = req.body;
+  const itemUrl = (await client.query("INSERT INTO item (name, description, category_id, price, quantity_in_stock) VALUES ($1::text, $2::text, $3::bigint, $4::bigint, $5::int) RETURNING url", [itemName, itemDescription, itemCategory, itemPrice, itemQuantityInStock])).rows[0].url;
+  await client.end();
+
+  res.redirect(itemUrl);
+});
