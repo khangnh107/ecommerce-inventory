@@ -40,3 +40,7 @@ exports.categoryDetail = asyncHandler(async (req, res, next) => {
         itemsInCategory: itemsInCategory,
     });
 });
+
+exports.getCategoryAddForm = asyncHandler(async (req, res, next) => {
+    res.render("category_add_form", {title: "Create Category"});
+});

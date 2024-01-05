@@ -9,6 +9,8 @@ const itemController = require("../controllers/itemController")
 // Category Routes
 // List of all categories
 router.get("/categories", categoryController.categoryList);
+// Page to create new category
+router.get("/category/create", categoryController.getCategoryAddForm);
 // Detail page of a category
 router.get("/category/:id", categoryController.categoryDetail);
 
