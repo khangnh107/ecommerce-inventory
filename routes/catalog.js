@@ -25,5 +25,7 @@ router.get("/item/create", itemController.getItemForm);
 router.post("/item/create", itemController.postItemAdd);
 // Detail page of an item
 router.get("/item/:id", itemController.itemDetail);
+// POST route to delete item
+router.post("/item/:id/delete", itemController.postItemDelete);
 
 module.exports = router;

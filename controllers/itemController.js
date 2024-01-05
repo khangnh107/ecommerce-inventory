@@ -69,3 +69,19 @@ exports.postItemAdd = asyncHandler(async (req, res, next) => {
 
   res.redirect(itemUrl);
 });
+
+exports.postItemDelete = asyncHandler(async (req, res, next) => {
+  const client = new Client({
+    host: 'localhost',
+    port: 5432,
+    database: 'ecommerce_inventory',
+    user: 'nhk',
+  });
+
+  await client.connect();
+  const itemId = req.params.id;
+  await client.query("DELETE FROM item WHERE id = $1::bigint", [itemId]);
+  await client.end();
+
+  res.redirect("/catalog/items");
+});
