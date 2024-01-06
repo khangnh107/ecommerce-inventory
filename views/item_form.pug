@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title
-  form(action="/catalog/item/create", method="POST")
+  form(method="POST")
     div.mb-3
       label.form-label(for="item-name") Item Name:
       input.form-control(type="text", id="item-name", name="itemName")
