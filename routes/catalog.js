@@ -10,13 +10,17 @@ const itemController = require("../controllers/itemController")
 // List of all categories
 router.get("/categories", categoryController.categoryList);
 // Page to create new category
-router.get("/category/create", categoryController.getCategoryForm);
+router.get("/category/create", categoryController.getCategoryAddForm);
 // POST route to create new category
 router.post("/category/create", categoryController.postCategoryAdd);
 // Detail page of a category
 router.get("/category/:id", categoryController.categoryDetail);
 // POST route to delete category
 router.post("/category/:id/delete", categoryController.postCategoryDelete);
+// Page to update category
+router.get("/category/:id/update", categoryController.getCategoryUpdateForm);
+// POST route to update category
+router.post("/category/:id/update", categoryController.postCategoryUpdate);
 
 // Item Routes
 // List of all items
