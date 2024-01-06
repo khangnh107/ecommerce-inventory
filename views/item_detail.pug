@@ -10,6 +10,8 @@ block content
     p.mb-1 Price: $#{item.price}
     p.mb-1 Quantity in Stock: #{item.quantity_in_stock}
   hr
-  div.container
-    form(action=item.url + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this item?');")
+  div.container.row
+    form.col-auto(action=item.url + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this item?');")
       input.btn.btn-outline-danger(type="submit", value="Delete")
+    form.col-auto(action=item.url + "/update", method="GET")
+      input.btn.btn-outline-info(type="submit", value="Update")
