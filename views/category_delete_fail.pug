@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Before 
+    strong deleting 
+    | the category 
+    strong #{category}
+    |, you must first delete these items:
+
+  ul
+    for item in itemList
+      li
+        a(href=item.url)= item.name

@@ -15,6 +15,8 @@ router.get("/category/create", categoryController.getCategoryForm);
 router.post("/category/create", categoryController.postCategoryAdd);
 // Detail page of a category
 router.get("/category/:id", categoryController.categoryDetail);
+// POST route to delete category
+router.post("/category/:id/delete", categoryController.postCategoryDelete);
 
 // Item Routes
 // List of all items
