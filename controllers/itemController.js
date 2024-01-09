@@ -1,13 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const { Client } = require('pg');
 
+const connection_string = "postgres://akaepkol:qwc8fPDRFFZ1xDSdtIHXwrMOqqgm_MfH@castor.db.elephantsql.com/akaepkol";
+
 exports.itemList = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const itemList = (await client.query("SELECT * FROM item")).rows;
@@ -20,12 +17,7 @@ exports.itemList = asyncHandler(async (req, res, next) => {
 });
 
 exports.itemDetail = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const item = (await client.query("SELECT item.name, item.description, item.price, category.name AS category_name, category.url AS category_url, item.quantity_in_stock, item.url FROM item INNER JOIN category ON item.category_id = category.id WHERE item.id = $1::bigint", [req.params.id])).rows[0];
@@ -39,12 +31,7 @@ exports.itemDetail = asyncHandler(async (req, res, next) => {
 });
 
 exports.getItemForm = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const categoryList = (await client.query("SELECT * FROM category")).rows;
@@ -57,12 +44,7 @@ exports.getItemForm = asyncHandler(async (req, res, next) => {
 });
 
 exports.postItemAdd = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const {itemName, itemDescription, itemCategoryId, itemPrice, itemQuantityInStock} = req.body;
@@ -73,12 +55,7 @@ exports.postItemAdd = asyncHandler(async (req, res, next) => {
 });
 
 exports.postItemDelete = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const itemId = req.params.id;
@@ -89,12 +66,7 @@ exports.postItemDelete = asyncHandler(async (req, res, next) => {
 });
 
 exports.getItemUpdateForm = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const itemId = req.params.id;
@@ -110,12 +82,7 @@ exports.getItemUpdateForm = asyncHandler(async (req, res, next) => {
 });
 
 exports.postItemUpdate = asyncHandler(async (req, res, next) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'ecommerce_inventory',
-    user: 'nhk',
-  });
+  const client = new Client(connection_string);
 
   await client.connect();
   const itemId = req.params.id;

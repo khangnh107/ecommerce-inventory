@@ -1,13 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const { Client } = require('pg');
 
+const connection_string = "postgres://akaepkol:qwc8fPDRFFZ1xDSdtIHXwrMOqqgm_MfH@castor.db.elephantsql.com/akaepkol";
+
 exports.categoryList = asyncHandler(async (req, res, next) => {
-    const client = new Client({
-        host: 'localhost',
-        port: 5432,
-        database: 'ecommerce_inventory',
-        user: 'nhk',
-    });
+    const client = new Client(connection_string);
 
     await client.connect();
     const categoryList = (await client.query("SELECT * FROM category")).rows;
@@ -20,12 +17,7 @@ exports.categoryList = asyncHandler(async (req, res, next) => {
 });
 
 exports.categoryDetail = asyncHandler(async (req, res, next) => {
-    const client = new Client({
-        host: 'localhost',
-        port: 5432,
-        database: 'ecommerce_inventory',
-        user: 'nhk',
-    });
+    const client = new Client(connection_string);
 
     await client.connect();
     const category = (await client.query("SELECT * FROM category WHERE id=$1::bigint", [req.params.id])).rows[0];
@@ -44,12 +36,7 @@ exports.getCategoryAddForm = asyncHandler(async (req, res, next) => {
 });
 
 exports.postCategoryAdd = asyncHandler(async (req, res, next) => {
-    const client = new Client({
-        host: 'localhost',
-        port: 5432,
-        database: 'ecommerce_inventory',
-        user: 'nhk',
-    });
+    const client = new Client(connection_string);
 
     await client.connect();
     const {categoryName, categoryDescription} = req.body;
@@ -60,12 +47,7 @@ exports.postCategoryAdd = asyncHandler(async (req, res, next) => {
 });
 
 exports.postCategoryDelete = asyncHandler(async (req, res, next) => {
-    const client = new Client({
-        host: 'localhost',
-        port: 5432,
-        database: 'ecommerce_inventory',
-        user: 'nhk',
-    });
+    const client = new Client(connection_string);
 
     await client.connect();
     const category = (await client.query("SELECT * FROM category WHERE id=$1::bigint", [req.params.id])).rows[0];
@@ -84,12 +66,7 @@ exports.postCategoryDelete = asyncHandler(async (req, res, next) => {
 });
 
 exports.getCategoryUpdateForm = asyncHandler(async (req, res, next) => {
-    const client = new Client({
-        host: 'localhost',
-        port: 5432,
-        database: 'ecommerce_inventory',
-        user: 'nhk',
-    });
+    const client = new Client(connection_string);
 
     await client.connect();
     const category = (await client.query("SELECT * FROM category WHERE id = $1::bigint", [req.params.id])).rows[0];
@@ -102,12 +79,7 @@ exports.getCategoryUpdateForm = asyncHandler(async (req, res, next) => {
 });
 
 exports.postCategoryUpdate = asyncHandler(async (req, res, next) => {
-    const client = new Client({
-        host: 'localhost',
-        port: 5432,
-        database: 'ecommerce_inventory',
-        user: 'nhk',
-    });
+    const client = new Client(connection_string);
 
     await client.connect();
     const {categoryName, categoryDescription} = req.body;
