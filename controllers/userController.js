@@ -9,7 +9,14 @@ exports.getSignUpPage = asyncHandler(async (req, res, next) => {
 });
 
 exports.postSignUpPage = asyncHandler(async (req, res, next) => {
-  req.end("Signed up");
+  const client = new Client(connection_string);
+
+  await client.connect();
+  const {username, password} = req.body;
+  await client.query("INSERT INTO \"user\" (username, password) VALUES ($1::text, $2::text)", [username, password]);
+  await client.end();
+
+  res.redirect("/");
 });
 
 exports.getLoginPage = asyncHandler(async (req, res, next) => {
