@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { Client } = require('pg');
+require('dotenv').config()
 
 const connection_string = process.env.POSTGRES_CONNECTION_STRING;
 
