@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { Client } = require('pg');
 require('dotenv').config();
 
-const connection_string = process.env.POSTGRES_CONNECTION_STRING || "postgres://akaepkol:qwc8fPDRFFZ1xDSdtIHXwrMOqqgm_MfH@castor.db.elephantsql.com/akaepkol";
+const connection_string = process.env.POSTGRES_CONNECTION_STRING;
 
 exports.itemList = asyncHandler(async (req, res, next) => {
   const client = new Client(connection_string);
