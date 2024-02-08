@@ -16,7 +16,7 @@ exports.postSignUpPage = asyncHandler(async (req, res, next) => {
   await client.connect();
   const existingUsername = (await client.query("SELECT * FROM \"user\" WHERE username = $1::text", [username])).rows;
   if (existingUsername.length > 0) {
-    res.render("login-signup-form", {title: "Username already exists! Please use a different username to sign up!"});
+    res.render("login-signup-form", {title: "Username already exists! Please sign up again."});
   } else {
     await client.query("INSERT INTO \"user\" (username, password) VALUES ($1::text, $2::text)", [username, password]);
     res.redirect("/");
@@ -33,6 +33,23 @@ exports.postLoginPage = asyncHandler(async (req, res, next) => {
 
   const client = new Client(connection_string);
   await client.connect();
-  const user = await client.query("SELECT * FROM \"user\" WHERE usename = $1::text", [username]);
+  let existingUser = (await client.query("SELECT * FROM \"user\" WHERE username = $1::text", [username])).rows;
+  if (existingUser.length == 0) {
+    res.render("login-signup-form", {title: "Incorrect username! Please Log In Again."});
+  } else {
+    existingUser = existingUser[0];
+    if (password === existingUser.password) {
+      jwt.sign({existingUser}, process.env.JWT_SECRET, {expiresIn: "1h"}, (err, token) => {
+        if (err) {console.log(err)}
+        res
+          .cookie('access_token', 'Bearer ' + token, {
+            expires: new Date(Date.now() + 3600000) // cookie will be removed after 1 hours
+          })
+          .render("index", {title: "Logged in successfully! Welcome to Ecommerce Inventory."});
+      });
+    } else {
+      res.render("login-signup-form", {title: "Incorrect password! Please Log In Again."});
+    }
+  }
   await client.end();
 });

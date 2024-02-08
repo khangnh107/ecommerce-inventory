@@ -1,37 +1,78 @@
 const asyncHandler = require('express-async-handler');
 const { Client } = require('pg');
+const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 const connection_string = process.env.POSTGRES_CONNECTION_STRING;
 
 exports.itemList = asyncHandler(async (req, res, next) => {
-  const client = new Client(connection_string);
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, async (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+      const user = authorizedData.existingUser;
 
-  await client.connect();
-  const itemList = (await client.query("SELECT * FROM item")).rows;
-  await client.end();
+      //If token is successfully verified, we can send the autorized data 
+      const client = new Client(connection_string);
+        
+      await client.connect();
+      const itemList = (await client.query("SELECT * FROM item WHERE user_id = $1::bigint", [user.id])).rows;
+      await client.end();
 
-  res.render("item_list", {
-    title: "List of All Items",
-    itemList: itemList,
+      res.render("item_list", {
+        title: "List of All Items",
+        itemList: itemList,
+      });
+    }
   });
 });
 
 exports.itemDetail = asyncHandler(async (req, res, next) => {
-  const client = new Client(connection_string);
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, async (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+      const user = authorizedData.existingUser;
 
-  await client.connect();
-  const item = (await client.query("SELECT item.name, item.description, item.price, category.name AS category_name, category.url AS category_url, item.quantity_in_stock, item.url FROM item INNER JOIN category ON item.category_id = category.id WHERE item.id = $1::bigint", [req.params.id])).rows[0];
-  await client.end();
+      //If token is successfully verified, we can send the autorized data 
+      const client = new Client(connection_string);
 
-  res.render("item_detail", {
-    item: item,
-    categoryName: item.category_name,
-    categoryUrl: item.categoryUrl,
+      await client.connect();
+      const item = (await client.query("SELECT item.name, item.description, item.price, category.name AS category_name, category.url AS category_url, item.quantity_in_stock, item.url FROM item INNER JOIN category ON item.category_id = category.id WHERE item.id = $1::bigint AND item.user_id = $2::bigint", [req.params.id, user.id])).rows[0];
+      await client.end();
+
+      res.render("item_detail", {
+        item: item,
+        categoryName: item.category_name,
+        categoryUrl: item.categoryUrl,
+      });
+    }
   });
 });
 
 exports.getItemForm = asyncHandler(async (req, res, next) => {
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+        //If token is successfully verified, we can send the autorized data 
+        res.json({
+            message: 'Successful Log In!',
+            authorizedData,
+        });
+        console.log('SUCCESS: Connected to protected route');
+    }
+  });
+
   const client = new Client(connection_string);
 
   await client.connect();
@@ -45,6 +86,22 @@ exports.getItemForm = asyncHandler(async (req, res, next) => {
 });
 
 exports.postItemAdd = asyncHandler(async (req, res, next) => {
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+        //If token is successfully verified, we can send the autorized data 
+        res.json({
+            message: 'Successful Log In!',
+            authorizedData,
+        });
+        console.log('SUCCESS: Connected to protected route');
+    }
+  });
+
   const client = new Client(connection_string);
 
   await client.connect();
@@ -56,6 +113,22 @@ exports.postItemAdd = asyncHandler(async (req, res, next) => {
 });
 
 exports.postItemDelete = asyncHandler(async (req, res, next) => {
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+        //If token is successfully verified, we can send the autorized data 
+        res.json({
+            message: 'Successful Log In!',
+            authorizedData,
+        });
+        console.log('SUCCESS: Connected to protected route');
+    }
+  });
+
   const client = new Client(connection_string);
 
   await client.connect();
@@ -67,6 +140,22 @@ exports.postItemDelete = asyncHandler(async (req, res, next) => {
 });
 
 exports.getItemUpdateForm = asyncHandler(async (req, res, next) => {
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+        //If token is successfully verified, we can send the autorized data 
+        res.json({
+            message: 'Successful Log In!',
+            authorizedData,
+        });
+        console.log('SUCCESS: Connected to protected route');
+    }
+  });
+
   const client = new Client(connection_string);
 
   await client.connect();
@@ -83,6 +172,22 @@ exports.getItemUpdateForm = asyncHandler(async (req, res, next) => {
 });
 
 exports.postItemUpdate = asyncHandler(async (req, res, next) => {
+  // Verify the JWT token generated for the user
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authorizedData) => {
+    if (err) {
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+        //If token is successfully verified, we can send the autorized data 
+        res.json({
+            message: 'Successful Log In!',
+            authorizedData,
+        });
+        console.log('SUCCESS: Connected to protected route');
+    }
+  });
+  
   const client = new Client(connection_string);
 
   await client.connect();

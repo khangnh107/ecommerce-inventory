@@ -4,8 +4,11 @@ var router = express.Router();
 // Import controllers
 const userController = require("../controllers/userController");
 
+// Import JWT Verification
+const {checkToken} = require("../controllers/checkToken");
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', checkToken, function(req, res, next) {
   res.render('index', { title: 'Ecommerce Inventory Homepage' });
 });
 

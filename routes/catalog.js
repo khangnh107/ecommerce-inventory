@@ -4,38 +4,40 @@ const router = express.Router();
 // Import controllers
 const categoryController = require("../controllers/categoryController");
 const itemController = require("../controllers/itemController")
-// const itemController = require("../controllers/itemController");
+
+// Import JWT Verification
+const {checkToken} = require("../controllers/checkToken");
 
 // Category Routes
 // List of all categories
-router.get("/categories", categoryController.categoryList);
+router.get("/category", checkToken, categoryController.categoryList);
 // Page to create new category
-router.get("/category/create", categoryController.getCategoryAddForm);
+router.get("/category/create", checkToken, categoryController.getCategoryAddForm);
 // POST route to create new category
-router.post("/category/create", categoryController.postCategoryAdd);
+router.post("/category/create", checkToken, categoryController.postCategoryAdd);
 // Detail page of a category
-router.get("/category/:id", categoryController.categoryDetail);
+router.get("/category/:id", checkToken, categoryController.categoryDetail);
 // POST route to delete category
-router.post("/category/:id/delete", categoryController.postCategoryDelete);
+router.post("/category/:id/delete", checkToken, categoryController.postCategoryDelete);
 // Page to update category
-router.get("/category/:id/update", categoryController.getCategoryUpdateForm);
+router.get("/category/:id/update", checkToken, categoryController.getCategoryUpdateForm);
 // POST route to update category
-router.post("/category/:id/update", categoryController.postCategoryUpdate);
+router.post("/category/:id/update", checkToken, categoryController.postCategoryUpdate);
 
 // Item Routes
 // List of all items
-router.get("/items", itemController.itemList);
+router.get("/item", checkToken, itemController.itemList);
 // Page to create new item
-router.get("/item/create", itemController.getItemForm);
+router.get("/item/create", checkToken, itemController.getItemForm);
 // POST route to create new item
-router.post("/item/create", itemController.postItemAdd);
+router.post("/item/create", checkToken, itemController.postItemAdd);
 // Detail page of an item
-router.get("/item/:id", itemController.itemDetail);
+router.get("/item/:id", checkToken, itemController.itemDetail);
 // POST route to delete item
-router.post("/item/:id/delete", itemController.postItemDelete);
+router.post("/item/:id/delete", checkToken, itemController.postItemDelete);
 // Page to update item
-router.get("/item/:id/update", itemController.getItemUpdateForm);
+router.get("/item/:id/update", checkToken, itemController.getItemUpdateForm);
 // POST route to update item
-router.post("/item/:id/update", itemController.postItemUpdate);
+router.post("/item/:id/update", checkToken, itemController.postItemUpdate);
 
 module.exports = router;
