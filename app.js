@@ -19,6 +19,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// This middleware is used if you want to verify JWT using authorization header instead of cookies
+
+// app.use((req, res, next) => {
+//   if (req.cookies.access_token !== undefined) {
+//     req.headers["authorization"] = req.cookies.access_token;
+//   }
+//   next();
+// });
+
 app.use('/', indexRouter);
 app.use("/catalog", catalogRouter);
 
