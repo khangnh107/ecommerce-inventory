@@ -1,1 +1,1 @@
-Link to Project Demo: https://ecommerce-inventory.adaptable.app
+Link to Project Demo: https://ecommerce-inventory.adaptable.app/login
